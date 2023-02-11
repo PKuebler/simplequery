@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-type lexer interface {
+type QueryLexer interface {
 	Lex() (position int, token Token, text string)
 }
 
@@ -17,7 +17,7 @@ func Match(input string, data map[string]string) (ok bool, details []bool, err e
 	return query(lexer, data)
 }
 
-func query(lexer *Lexer, data map[string]string) (ok bool, details []bool, err error) {
+func query(lexer QueryLexer, data map[string]string) (ok bool, details []bool, err error) {
 	key := ""
 	operator := Token(ILLEGAL)
 	value := ""

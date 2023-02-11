@@ -25,6 +25,7 @@ func TestQuery(t *testing.T) {
 		data    map[string]string
 		ok      bool
 		details []bool
+		error   bool
 	}{
 		{
 			query:   "existingKey",
@@ -224,6 +225,13 @@ func TestQuery(t *testing.T) {
 			ok:      true,
 			details: []bool{true, true, true, false, false, false},
 		},
+		{
+			query:   "#",
+			data:    map[string]string{"existingKey": "value"},
+			ok:      false,
+			details: nil,
+			error:   true,
+		},
 	}
 
 	for i, testCase := range testCases {
@@ -233,7 +241,11 @@ func TestQuery(t *testing.T) {
 		testCase.desc = fmt.Sprintf("%d: %s (%s)", i, testCase.query, testCase.desc)
 		assert.Equal(t, testCase.ok, ok, testCase.desc)
 		assert.Equal(t, testCase.details, details, testCase.desc)
-		assert.NoError(t, err, testCase.desc)
+		if testCase.error {
+			assert.Error(t, err, testCase.desc)
+		} else {
+			assert.NoError(t, err, testCase.desc)
+		}
 	}
 }
 
@@ -447,6 +459,26 @@ func TestProcessPair(t *testing.T) {
 			value:      "12.34",
 			data:       map[string]string{"abc": "abc"},
 			desc:       "LTE, positive, found, no number",
+			ok:         false,
+			isError:    true,
+		},
+		{
+			isPositive: true,
+			key:        "abc",
+			operator:   LTE,
+			value:      "12!34",
+			data:       map[string]string{"abc": "abc"},
+			desc:       "LTE, positive, found, bad value",
+			ok:         false,
+			isError:    true,
+		},
+		{
+			isPositive: true,
+			key:        "abc",
+			operator:   LTE,
+			value:      "1234",
+			data:       map[string]string{"abc": "12!34"},
+			desc:       "LTE, positive, found, bad value",
 			ok:         false,
 			isError:    true,
 		},
