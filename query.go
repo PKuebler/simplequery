@@ -5,6 +5,10 @@ import (
 	"strconv"
 )
 
+type lexer interface {
+	Lex() (position int, token Token, text string)
+}
+
 func Match(input string, data map[string]string) (ok bool, details []bool, err error) {
 	lexer := NewLexer(input)
 

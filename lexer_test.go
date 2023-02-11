@@ -47,9 +47,24 @@ func TestLexer(t *testing.T) {
 			texts:  []string{"variableName", "AND", "test", ""},
 		},
 		{
+			query:  "variableName AN test",
+			tokens: []Token{IDENT, IDENT, IDENT, EOF},
+			texts:  []string{"variableName", "AN", "test", ""},
+		},
+		{
+			query:  "variableName A test",
+			tokens: []Token{IDENT, IDENT, IDENT, EOF},
+			texts:  []string{"variableName", "A", "test", ""},
+		},
+		{
 			query:  "variableName OR test",
 			tokens: []Token{IDENT, OR, IDENT, EOF},
 			texts:  []string{"variableName", "OR", "test", ""},
+		},
+		{
+			query:  "variableName O test",
+			tokens: []Token{IDENT, IDENT, IDENT, EOF},
+			texts:  []string{"variableName", "O", "test", ""},
 		},
 		{
 			query:  "variableName=b",
