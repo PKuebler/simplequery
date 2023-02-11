@@ -135,15 +135,16 @@ func (l *Lexer) Lex() (position int, token Token, text string) {
 			startPos := l.pos
 			if r == 'A' || r == 'a' {
 				nextN := l.next()
-				if nextN != 'N' && nextN != 'n' {
-					l.backup()
-				} else {
+				if nextN == 'N' || nextN == 'n' {
 					nextD := l.next()
-					if nextD != 'D' && nextD != 'd' {
-						l.backup()
-					} else {
+					if nextD == 'D' || nextD == 'd' {
 						return startPos, AND, "AND"
+					} else {
+						l.backup()
+						l.backup()
 					}
+				} else {
+					l.backup()
 				}
 			} else if r == 'O' || r == 'o' {
 				nextR := l.next()
@@ -154,7 +155,6 @@ func (l *Lexer) Lex() (position int, token Token, text string) {
 				}
 			}
 
-			// backup and let lexIdent rescan the beginning of the ident
 			l.backup()
 			lit := l.lexIdent()
 			return startPos, IDENT, lit

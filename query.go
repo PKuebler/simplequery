@@ -5,6 +5,10 @@ import (
 	"strconv"
 )
 
+type QueryLexer interface {
+	Lex() (position int, token Token, text string)
+}
+
 // Match the input to the data. Returns whether it is a successful match,
 // an array with the individual results and an error if the input query contains errors.
 func Match(input string, data map[string]string) (ok bool, details []bool, err error) {
@@ -13,7 +17,7 @@ func Match(input string, data map[string]string) (ok bool, details []bool, err e
 	return query(lexer, data)
 }
 
-func query(lexer *Lexer, data map[string]string) (ok bool, details []bool, err error) {
+func query(lexer QueryLexer, data map[string]string) (ok bool, details []bool, err error) {
 	key := ""
 	operator := Token(ILLEGAL)
 	value := ""
