@@ -30,3 +30,6 @@ jobs:
           skip-cache: true
           skip-pkg-cache: true
           skip-build-cache: true
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
