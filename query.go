@@ -9,6 +9,8 @@ type lexer interface {
 	Lex() (position int, token Token, text string)
 }
 
+// Match the input to the data. Returns whether it is a successful match,
+// an array with the individual results and an error if the input query contains errors.
 func Match(input string, data map[string]string) (ok bool, details []bool, err error) {
 	lexer := NewLexer(input)
 

@@ -5,6 +5,7 @@ import (
 	"unicode/utf8"
 )
 
+// Token type
 type Token int
 
 const (
@@ -51,15 +52,18 @@ var tokens = []string{
 	OR:  "OR",
 }
 
+// String name of a token
 func (t Token) String() string {
 	return tokens[t]
 }
 
+// Lexer breaks down the input as tokens
 type Lexer struct {
 	input string
 	pos   int
 }
 
+// NewLexer create a lexer
 func NewLexer(input string) *Lexer {
 	return &Lexer{
 		input: input,
@@ -84,6 +88,7 @@ func (l *Lexer) backup() {
 	}
 }
 
+// Lex returns the next token, the position and the content.
 func (l *Lexer) Lex() (position int, token Token, text string) {
 	for {
 		switch r := l.next(); {
