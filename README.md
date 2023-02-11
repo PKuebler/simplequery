@@ -1,4 +1,4 @@
-# Simple Query
+# Simple Query [![codecov](https://codecov.io/gh/PKuebler/simplequery/branch/main/graph/badge.svg?token=KGLHJWUBOO)](https://codecov.io/gh/PKuebler/simplequery)
 
 A simple query language that allows to make queries on a key value set.
 
