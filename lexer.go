@@ -133,7 +133,8 @@ func (l *Lexer) Lex() (position int, token Token, text string) {
 			return startPos, NUMBER, lit
 		case unicode.IsLetter(r):
 			startPos := l.pos
-			if r == 'A' || r == 'a' {
+			switch r {
+			case 'A', 'a':
 				nextN := l.next()
 				if nextN == 'N' || nextN == 'n' {
 					nextD := l.next()
@@ -146,7 +147,7 @@ func (l *Lexer) Lex() (position int, token Token, text string) {
 				} else {
 					l.backup()
 				}
-			} else if r == 'O' || r == 'o' {
+			case 'O', 'o':
 				nextR := l.next()
 				if nextR == 'R' || nextR == 'r' {
 					return startPos, OR, "OR"
