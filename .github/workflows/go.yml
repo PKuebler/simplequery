@@ -16,7 +16,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.19
+          go-version: 1.25
 
       - name: Build
         run: go build -v ./...
@@ -28,8 +28,6 @@ jobs:
         uses: golangci/golangci-lint-action@v8
         with:
           skip-cache: true
-          skip-pkg-cache: true
-          skip-build-cache: true
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
